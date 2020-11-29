@@ -2,6 +2,8 @@
 Users Version of Ecommerce
 
 ### Implementations
+- Dynamic Views
+- CartActivity
 - FireStore Used
 - Crashlytics Implemented
 
