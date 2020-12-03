@@ -6,7 +6,9 @@ Users Version of Ecommerce
 - CartActivity
 - FireStore Used
 - Crashlytics Implemented
+- Implementation of FCM
+- AdminSDK
 
 
 ### Download
- [APK](https://github.com/Iltwats/UserEcom/releases/download/v.1/UserEcommerce.apk)
+ [APK](https://github.com/Iltwats/UserEcom/releases/download/v0.2/UserEcommerce.apk)
