@@ -55,11 +55,13 @@ public class CartActivity extends AppCompatActivity {
         showItemsAndPrice();
 
     }
+
+    //get MyApp context
     private void setup() {
         app = (MyApp) getApplicationContext();
     }
 
-
+    //Show cartItems in View
     private void showCartItems() {
         for (Map.Entry<String, CartItem> map : cart.map.entrySet()) {
             CartItemViewBinding b = CartItemViewBinding.inflate(
@@ -83,6 +85,7 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
+    //Setup Delete buttons for each item
     private void setupDeleteButton(CartItemViewBinding b, String key, CartItem value) {
         b.deleteCartItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +100,7 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
+    // Show final items and price
     private void showItemsAndPrice() {
         binding.items.setText("Items : " + cart.noOfItems);
         binding.price.setText("Price : Rs. " + cart.totalPrice);
@@ -115,6 +119,7 @@ public class CartActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    // place order final
     public void placeOrder(View view) {
         List<CartItem> orderItems = new ArrayList<>();
 

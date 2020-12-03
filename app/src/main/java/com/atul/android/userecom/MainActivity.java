@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         app = (MyApp) getApplicationContext();
     }
 
+    // Fetch available products from cloud
     private void fetchProductsListFromCloudFirestore() {
 
         if (app.isOffline()) {
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Setup the products in recyclerView
     private void setupList() {
         adapter = new ProductsAdapter(this, list, cart);
 
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setAdapter(adapter);
     }
 
+    // Update checkout summary for the app
     public void updateCheckOutSummary() {
         if (cart.noOfItems == 0) {
             binding.checkout.setVisibility(View.GONE);
