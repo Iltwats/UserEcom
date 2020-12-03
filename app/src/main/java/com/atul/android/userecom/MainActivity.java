@@ -19,6 +19,7 @@ import com.atul.android.userecom.model.Product;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
+        FirebaseMessaging.getInstance().subscribeToTopic(Constants.USER);
         setup();
         fetchProductsListFromCloudFirestore();
 

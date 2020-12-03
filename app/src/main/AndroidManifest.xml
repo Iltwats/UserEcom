@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:name=".MyApp"
@@ -13,8 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UserEcom">
         <activity android:name=".CartActivity"
-            android:label="Cart">
+            android:label="Cart"
+            android:parentActivityName=".MainActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
         </activity>
+        <service
+            android:name=".fcm.FCMClass"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
