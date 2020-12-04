@@ -21,6 +21,7 @@ import com.atul.android.userecom.model.Orders;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -126,36 +127,47 @@ public class CartActivity extends AppCompatActivity {
         for (Map.Entry<String, CartItem> map : cart.map.entrySet()) {
             orderItems.add(map.getValue());
         }
-        long seed = System.currentTimeMillis();
-        String orderID = new Random(seed).nextInt(1000000000) + 529430187 + "" + cart.noOfItems + "" + cart.totalPrice;
+        String name = binding.editName.getText().toString();
         Orders newOrder = new Orders(
-                orderID,
+                name,
                 Timestamp.now(),
                 orderItems,
                 Orders.OrderStatus.PLACED,
                 cart.totalPrice,
                 cart.noOfItems
         );
-        if (!orderItems.isEmpty()) {
-            app.db.collection(Constants.ORDER).document(orderID)
-                    .set(newOrder)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+        if (!orderItems.isEmpty() && name.length()>3) {
+            app.db.collection(Constants.ORDER)
+                    .add(newOrder)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
-                        public void onSuccess(Void aVoid) {
+                        public void onSuccess(DocumentReference documentReference) {
                             Toast.makeText(CartActivity.this, "Order Successfully Placed!", Toast.LENGTH_SHORT).show();
-                            new FCMSender().send(MessageFormatter.getSampleMessage("admin", "New Order!", "new order with " + orderID ), new Callback() {
+                            String sdd= MessageFormatter.getSampleMessage("admin", "New Order!", "New Order from " + name +" of Rs."+cart.totalPrice);
+                            new FCMSender().send(sdd, new Callback() {
                                 @Override
                                 public void onFailure(Call call, IOException e) {
-                                    Log.e("qwerty","Failed to send notification.");
-                                    Toast.makeText(CartActivity.this, "note Placed!", Toast.LENGTH_SHORT).show();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(CartActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                            Log.e("mssg",e.toString());
+                                        }
+                                    });
                                 }
 
                                 @Override
                                 public void onResponse(Call call, Response response) throws IOException {
-                                    Log.e("ytrewq","Success to send notification.");
-
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(CartActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                                            Log.e("mssg",response.toString());
+                                        }
+                                    });
                                 }
                             });
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -166,7 +178,7 @@ public class CartActivity extends AppCompatActivity {
                     });
         }
         else{
-            Toast.makeText(CartActivity.this, "Failed to place order! Cart is empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CartActivity.this, "Failed to place order! Cart is empty! or name is short.(Min 3 char)", Toast.LENGTH_SHORT).show();
         }
     }
 }

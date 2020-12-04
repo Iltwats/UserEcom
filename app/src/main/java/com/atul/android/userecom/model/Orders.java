@@ -8,14 +8,15 @@ public class Orders {
     public String orderID;
     public Timestamp orderTime;
     public List<CartItem> orderItems;
+    public String name;
     public int action;
     public int total_price, total_items;
 
     public Orders() {
     }
 
-    public Orders(String orderID, Timestamp orderTime, List<CartItem> orderItems, int action, int total_price, int total_items) {
-        this.orderID = orderID;
+    public Orders(String name, Timestamp orderTime, List<CartItem> orderItems, int action, int total_price, int total_items) {
+        this.name= name;
         this.orderTime = orderTime;
         this.orderItems = orderItems;
         this.action = action;
