@@ -1,5 +1,6 @@
 # UserEcom
-Users Version of Ecommerce
+Users Version of Ecommerce.
+For Admin version of the [app](https://github.com/Iltwats/ECommerce).
 
 ### Implementations
 - Dynamic Views
